@@ -6,6 +6,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'dart:convert';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 // class HomePage extends StatelessWidget {
 //   @override
@@ -174,6 +175,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin {   //页面保持
   
   int page = 1;
+  GlobalKey<RefreshFooterState> _footerkey = new GlobalKey<RefreshFooterState>();
   List<Map> hotGoodsList = [];
   String homePageContent = '正在获取数据';
   @override
@@ -181,7 +183,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
 
   @override
   void initState() {
-    _getHotGoods();
+    // _getHotGoods();
     // getHomePageContent().then((val) {
     //   setState(() {
     //     homePageContent = val.toString();
@@ -220,8 +222,8 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
               List<Map> floor2 = (data['data']['floor2'] as List).cast();
               List<Map> floor3 = (data['data']['floor3'] as List).cast();
               
-              return SingleChildScrollView(
-                child: Column(
+              return EasyRefresh(
+                child: ListView(
                   children: <Widget>[
                     SwiperDiy(swiperDataList: swiper),
                     TopNavigator(navigatorList: navigatorList),
@@ -235,9 +237,38 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
                     FloorContent(floorGoodsList:floor2),
                     FloorTitle(picture_adress:floor3Title),
                     FloorContent(floorGoodsList:floor3),
-                  _hotGoods(),
+                    _hotGoods(),
 
                   ],
+                ),
+
+                loadMore: ()async{
+                  print('开始加载更多。。。');
+
+                  var formPage = {'page',page};
+                  await request('homePageBelowConten',formData:formPage).then((val){
+                    var data = json.decode(val.toString());
+                    List<Map> newGoodsList = (data['data'] as List ).cast();
+                    setState(() {
+                      hotGoodsList.addAll(newGoodsList);
+                      page++;
+                    });
+                  });
+
+                },
+                refreshFooter: ClassicsFooter(
+                  key: _footerkey,
+                  bgColor: Colors.white,
+                  textColor: Colors.pink,
+                  moreInfoColor: Colors.pink,
+                  showMore: true,
+                  noMoreText: '',
+                  moreInfo: '更多信息',
+                  loadReadyText: '松手刷新',
+                  loadingText: '上拉',
+                  loadedText: '1111',
+                  loadText: '使劲上拉',
+                  loadHeight: 60,
                 ),
               );
             } else {
@@ -249,19 +280,19 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
         ));
   }
 //获取热销商品数据
-  void _getHotGoods(){
-    var formData = {'page' :page};
-    request('homePageBelowConten',formData:formData).then((val){
-      var data = json.decode(val.toString());
-      List<Map> newGoodsList = (data['data'] as List).cast();
+  // void _getHotGoods(){
+  //   var formData = {'page' :page};
+  //   request('homePageBelowConten',formData:formData).then((val){
+  //     var data = json.decode(val.toString());
+  //     List<Map> newGoodsList = (data['data'] as List).cast();
 
-      setState(() {
-        hotGoodsList.addAll(newGoodsList);
-        page++;
-      });
+  //     setState(() {
+  //       hotGoodsList.addAll(newGoodsList);
+  //       page++;
+  //     });
 
-    });
-  }
+  //   });
+  // }
 
 Widget hotTitle =Container(//热销标题
   margin: EdgeInsets.only(top: 10.0),
@@ -374,6 +405,7 @@ class TopNavigator extends StatelessWidget {
 
   Widget _gridViewItemUI(BuildContext context, item) {
     return InkWell(
+      
       onTap: () {
         Text('点击了导航');
       },
@@ -396,6 +428,7 @@ class TopNavigator extends StatelessWidget {
       height: ScreenUtil().setHeight(320),
       padding: EdgeInsets.all(3.0),
       child: GridView.count(
+        physics: NeverScrollableScrollPhysics(),
         crossAxisCount: 5,
         padding: EdgeInsets.all(5.0),
         children: navigatorList.map((item) {
@@ -475,7 +508,7 @@ class Recommend extends StatelessWidget {
       onTap: (){},
       child: Container(
         height: ScreenUtil().setHeight(330),
-        width: ScreenUtil().setWidth(250),
+        width: ScreenUtil().setWidth(240),
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -500,7 +533,7 @@ class Recommend extends StatelessWidget {
   //滑动窗口
   Widget _recommendList(){
     return Container(
-      height: ScreenUtil().setHeight(330),
+      height: ScreenUtil().setHeight(338),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: recommendList.length,
@@ -514,7 +547,7 @@ class Recommend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil().setHeight(395),
+      height: ScreenUtil().setHeight(400),
       margin: EdgeInsets.only(top: 10.0),
       child: Column(
         children: <Widget>[
@@ -528,8 +561,6 @@ class Recommend extends StatelessWidget {
 }
 
 //===============楼层区域
-
-
 class FloorTitle extends StatelessWidget {
 
   final String picture_adress;
@@ -600,7 +631,6 @@ FloorContent({Key key, this.floorGoodsList}):super(key:key);
   }
 
 }
-
 
 //火爆专区类
   class HotGoods extends StatefulWidget {
