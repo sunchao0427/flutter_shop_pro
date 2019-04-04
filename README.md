@@ -2,8 +2,8 @@
 
 A new Flutter project.
 事例图片
-![首页图片](/Users/Chao/Desktop/Screenshot_1554347920.png)
-![分类页面](/Users/Chao/Desktop/Screenshot_1554348018.png )
+![首页图片](https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/main.png)
+![分类页面](https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/category.png )
 
 
 
