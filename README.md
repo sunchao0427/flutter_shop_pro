@@ -8,8 +8,8 @@ A new Flutter project.
 
 
 
-[<img src="https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/iPhone_main.png" width="270" height="480" alt="Brand-first shopping design" align="left">](https://github.com/flutter/flutter/tree/master/examples/flutter_gallery/lib/demo/animation)
-<img src="https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/iPhone_category1.png" width="270" height="500" alt="Fitness app design">
+[<img src="https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/iPhone_main.png" width="270" height="520" alt="Brand-first shopping design" align="left">](https://github.com/flutter/flutter/tree/master/examples/flutter_gallery/lib/demo/animation)
+<img src="https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/iPhone_category1.png" width="270" height="520" alt="Fitness app design">
 
 
 
