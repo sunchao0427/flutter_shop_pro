@@ -2,9 +2,12 @@
 
 A new Flutter project.
 事例图片
-![首页图片](https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/main.png)
-![分类页面](https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/category.png )
+<!--![首页图片](https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/main.png)-->
+<!--![分类页面](https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/category.png )-->
 
+
+[<img src="https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/main.png" width="270" height="480" alt="Brand-first shopping design" align="left">](https://github.com/flutter/flutter/tree/master/examples/flutter_gallery/lib/demo/animation)
+<img src="https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/category.png" width="270" height="480" alt="Fitness app design">
 
 
 
