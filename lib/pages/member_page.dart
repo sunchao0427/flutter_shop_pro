@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provide/provide.dart';
+import '../provide/counter.dart';
 
 class MemberPage extends StatelessWidget {
   @override
@@ -6,7 +8,14 @@ class MemberPage extends StatelessWidget {
     return Scaffold(
       appBar: new AppBar(title: Text('会员中心'),),
       body: Center(
-        child: Text('会员中心界面'),
+        child: Provide<Counter>(
+          builder: (context,child,counter){
+            return Text(
+            '${counter.value}',
+            style: Theme.of(context).textTheme.display1,
+          );
+          },
+        ),
       ),
     );
   }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provide/provide.dart';
+import '../provide/counter.dart';
+
 
 class CartPage extends StatelessWidget {
   @override
@@ -6,8 +9,45 @@ class CartPage extends StatelessWidget {
     return Scaffold(
       appBar: new AppBar(title: Text('购物车'),),
       body: Center(
-        child: Text('购物车界面'),
+        child: Column(
+         children: <Widget>[
+           myNumber(),
+           myButton()
+         ],
+        ),
       ),
+    );
+  }
+}
+
+class myNumber extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 200),
+      child: Provide<Counter>(
+        builder: (context,child,counter){
+          return Text(
+            '${counter.value}',
+            style: Theme.of(context).textTheme.display1,
+          );
+        },
+      ),
+    );
+  }
+}
+
+class myButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: RaisedButton(
+        onPressed: (){
+          Provide.value<Counter>(context).increment();
+        },
+        child: Text('递增'),
+      ),
+      
     );
   }
 }
