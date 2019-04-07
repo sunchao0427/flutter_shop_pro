@@ -3,8 +3,6 @@ import 'dart:async';
 import 'dart:io';
 import '../config/service_url.dart';
 
-
-
 //抽取共有方法
 Future request(url, {formData}) async {
   try {
@@ -30,14 +28,7 @@ Future request(url, {formData}) async {
   }
 }
 
-
-
-
-
-
-
 //获取主页主题内容
-
 Future getHomePageContent() async {
   try {
     print('获取首页数据');
@@ -57,9 +48,7 @@ Future getHomePageContent() async {
   }
 }
 
-
 //获取火爆专区内容
-
 Future getHomePageBelowContent() async {
 
   try {

@@ -53,6 +53,7 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 }
 
+//左侧大类导航
 class CategoryListNav extends StatefulWidget {
   @override
   _CategoryListNavState createState() => _CategoryListNavState();
@@ -157,6 +158,7 @@ class _CategoryListNavState extends State<CategoryListNav> {
   }
 }
 
+//右侧小类导航
 class _rightCategoryNavi extends StatefulWidget {
   @override
   __rightCategoryNaviState createState() => __rightCategoryNaviState();
@@ -179,7 +181,7 @@ class __rightCategoryNaviState extends State<_rightCategoryNavi> {
             scrollDirection: Axis.horizontal,
             itemCount: childCategory.childCategoryList.length,
             itemBuilder: (context, index) {
-              return _rightInkWell(childCategory.childCategoryList[index]);
+              return _rightInkWell(index,childCategory.childCategoryList[index]);
             },
           ),
         );
@@ -187,14 +189,23 @@ class __rightCategoryNaviState extends State<_rightCategoryNavi> {
     );
   }
 
-  Widget _rightInkWell(BxMallSubDto item) {
+  Widget _rightInkWell(int index, BxMallSubDto item) {
+    bool isClick = false;
+    isClick = (index == Provide.value<ChildCategory>(context).childIndex)
+        ? true
+        : false;
+
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Provide.value<ChildCategory>(context).changeChildIndex(index);
+      },
       child: Container(
         padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
         child: Text(
           item.mallSubName,
-          style: TextStyle(fontSize: ScreenUtil().setSp(28)),
+          style: TextStyle(
+              fontSize: ScreenUtil().setSp(28),
+              color: isClick ? Colors.pink : Colors.black),
         ),
       ),
     );
@@ -219,14 +230,15 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   Widget build(BuildContext context) {
     return Provide<CategoryGoodsListProvide>(
       builder: (context, child, data) {
-        return Container(
-          width: ScreenUtil().setWidth(570),
-          height: ScreenUtil().setHeight(948),
-          child: ListView.builder(
-            itemCount: data.categoryGoodsList.length,
-            itemBuilder: (context, index) {
-              return _goodsList(data.categoryGoodsList,index);
-            },
+        return Expanded(
+          child: Container(
+            width: ScreenUtil().setWidth(570),
+            child: ListView.builder(
+              itemCount: data.categoryGoodsList.length,
+              itemBuilder: (context, index) {
+                return _goodsList(data.categoryGoodsList, index);
+              },
+            ),
           ),
         );
       },
@@ -246,7 +258,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
     // }
   }
 
-  Widget _goodsName(List newList,int index) {
+  Widget _goodsName(List newList, int index) {
     // WidgetBuilder(Conext,index){
     return Container(
       padding: EdgeInsets.all(5.0),
@@ -261,7 +273,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
     // }
   }
 
-  Widget _goodsPrice(List newList,int index) {
+  Widget _goodsPrice(List newList, int index) {
     // WidgetBuilder(context,index){
     return Container(
       margin: EdgeInsets.only(top: 20.0),
@@ -284,7 +296,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   }
 
 //组合组件为整体
-  Widget _goodsList(List newList,int index) {
+  Widget _goodsList(List newList, int index) {
     // WidgetBuilder(context,index){
     return InkWell(
       onTap: () {},
@@ -298,9 +310,12 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
                 Border(bottom: BorderSide(width: 1.0, color: Colors.black12))),
         child: Row(
           children: <Widget>[
-            _goodsImage(newList,index),
+            _goodsImage(newList, index),
             Column(
-              children: <Widget>[_goodsName(newList,index), _goodsPrice(newList,index)],
+              children: <Widget>[
+                _goodsName(newList, index),
+                _goodsPrice(newList, index)
+              ],
             )
           ],
         ),
