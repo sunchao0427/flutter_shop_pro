@@ -26,6 +26,7 @@ dependencies: #上线插件 在此配置
   flutter_easyrefresh: ^1.2.7
   provide: ^1.0.2
   fluttertoast: ^3.0.1
+  fluro: ^1.4.0
 
 
 dev_dependencies: #开发插件 在此配置

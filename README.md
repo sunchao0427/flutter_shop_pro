@@ -13,7 +13,18 @@ A new Flutter project.
 
 
 
+### 涉及的第三方库
+
+[路由管理-fluro](<https://github.com/theyakka/fluro>)
+
+
+
+
+
+
+
 ### 使用Flutter 
+
 >> Getting Started
 
 This project is a starting point for a Flutter application.

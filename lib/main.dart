@@ -4,7 +4,7 @@ import 'package:provide/provide.dart';
 import './provide/counter.dart';
 import './provide/child_category.dart';
 import './provide/category_goods_list.dart';
-
+import 'package:fluro/fluro.dart';
 
 void main(){
   
@@ -12,6 +12,7 @@ void main(){
   var provides = Providers();
   var childCategory = ChildCategory();
   var categoryGoodsList = CategoryGoodsListProvide();
+  final route = new Router();
 
   provides..provide(Provider<Counter>.value(counter));
   provides..provide(Provider<ChildCategory>.value(childCategory));
