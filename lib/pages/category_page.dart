@@ -98,7 +98,8 @@ class _CategoryListNavState extends State<CategoryListNav> {
 
         var childList = list[index].bxMallSubDto;
         var categoryId = list[index].mallCategoryId;
-        Provide.value<ChildCategory>(context).getChildCategory(childList);
+        Provide.value<ChildCategory>(context)
+            .getChildCategory(childList, categoryId);
         _getCategoryGoodsList(categoryId: categoryId);
       },
       child: Container(
@@ -128,7 +129,7 @@ class _CategoryListNavState extends State<CategoryListNav> {
         list = category.data;
       });
       Provide.value<ChildCategory>(context)
-          .getChildCategory(list[0].bxMallSubDto);
+          .getChildCategory(list[0].bxMallSubDto, list[0].mallCategoryId);
       // list.data.forEach(
       //   (item)=>print(item.mallCategoryName)
       // );
@@ -140,7 +141,7 @@ class _CategoryListNavState extends State<CategoryListNav> {
   void _getCategoryGoodsList({String categoryId}) async {
     var data = {
       'categoryId': categoryId == null ? '4' : categoryId,
-      'CategorySubId': "",
+      'categorySubId': "",
       'page': 1
     };
 
@@ -181,7 +182,8 @@ class __rightCategoryNaviState extends State<_rightCategoryNavi> {
             scrollDirection: Axis.horizontal,
             itemCount: childCategory.childCategoryList.length,
             itemBuilder: (context, index) {
-              return _rightInkWell(index,childCategory.childCategoryList[index]);
+              return _rightInkWell(
+                  index, childCategory.childCategoryList[index]);
             },
           ),
         );
@@ -198,6 +200,7 @@ class __rightCategoryNaviState extends State<_rightCategoryNavi> {
     return InkWell(
       onTap: () {
         Provide.value<ChildCategory>(context).changeChildIndex(index);
+        _getCategoryGoodsList(item.mallSubId);
       },
       child: Container(
         padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
@@ -209,6 +212,27 @@ class __rightCategoryNaviState extends State<_rightCategoryNavi> {
         ),
       ),
     );
+  }
+
+  //获取小类的商品列表
+  void _getCategoryGoodsList(String categorySubId) {
+    var data = {
+      'categoryId': Provide.value<ChildCategory>(context).categoryId,
+      'categorySubId': categorySubId,
+      'page': 1
+    };
+
+    request("getMallGoods", formData: data).then((val) {
+      var data = json.decode(val.toString());
+      CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(data);
+      Provide.value<CategoryGoodsListProvide>(context)
+          .getCategoryGoodsList(goodsList.data);
+      // setState(() {
+      // list = goodsList.data;
+      // });
+      // print('xxxxxxxxxx==============>>>>>>>>>>>>>>>>>>>${goodsList.data[0].goodsName}');
+      // print("hahhahahhaahaahahah${val}");
+    });
   }
 }
 
