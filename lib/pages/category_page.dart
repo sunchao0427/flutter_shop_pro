@@ -8,6 +8,7 @@ import 'package:provide/provide.dart';
 import '../provide/child_category.dart';
 import '../provide/category_goods_list.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CategoryPage extends StatefulWidget {
   @override
@@ -249,6 +250,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   // var list = [];
   GlobalKey<RefreshFooterState> _footerkey =
       new GlobalKey<RefreshFooterState>();
+      var scrollController = new ScrollController();
   @override
   void initState() {
     // _getCategoryGoodsList();
@@ -257,6 +259,15 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
 
   @override
   Widget build(BuildContext context) {
+    try {
+      if(Provide.value<ChildCategory>(context).page == 1){
+        //列表位置放到最上边
+        scrollController.jumpTo(0.0);
+      }
+    } catch (e) {
+      print("第一次初始化${e}");
+    }
+
     return Provide<CategoryGoodsListProvide>(
       builder: (context, child, data) {
         if (data.categoryGoodsList.length > 0) {
@@ -279,6 +290,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
                   loadHeight: 60,
                 ),
                 child: ListView.builder(
+                  controller: scrollController,
                   itemCount: data.categoryGoodsList.length,
                   itemBuilder: (context, index) {
                     return _goodsList(data.categoryGoodsList, index);
@@ -313,6 +325,14 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
       var data = json.decode(val.toString());
       CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(data);
       if (goodsList.data == null) {
+        Fluttertoast.showToast(
+          backgroundColor: Colors.pink,
+          msg: '没有更多数据了',
+          gravity: ToastGravity.CENTER,
+          toastLength: Toast.LENGTH_SHORT,
+          textColor: Colors.white,
+          fontSize: 16.0
+        );
         Provide.value<ChildCategory>(context).changeNoMoreText('没有更多了！！！');
       } else {
         Provide.value<CategoryGoodsListProvide>(context)
