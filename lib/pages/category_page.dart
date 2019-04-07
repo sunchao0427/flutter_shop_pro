@@ -138,14 +138,14 @@ class _CategoryListNavState extends State<CategoryListNav> {
   }
 
 //获取右侧商品列表调试参数接口
-  void _getCategoryGoodsList({String categoryId}) async {
+  void _getCategoryGoodsList({String categoryId}) {
     var data = {
       'categoryId': categoryId == null ? '4' : categoryId,
       'categorySubId': "",
       'page': 1
     };
 
-    await request("getMallGoods", formData: data).then((val) {
+    request("getMallGoods", formData: data).then((val) {
       var data = json.decode(val.toString());
       CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(data);
       Provide.value<CategoryGoodsListProvide>(context)
@@ -199,7 +199,7 @@ class __rightCategoryNaviState extends State<_rightCategoryNavi> {
 
     return InkWell(
       onTap: () {
-        Provide.value<ChildCategory>(context).changeChildIndex(index);
+        Provide.value<ChildCategory>(context).changeChildIndex(index,item.mallSubId);
         _getCategoryGoodsList(item.mallSubId);
       },
       child: Container(
@@ -225,13 +225,13 @@ class __rightCategoryNaviState extends State<_rightCategoryNavi> {
     request("getMallGoods", formData: data).then((val) {
       var data = json.decode(val.toString());
       CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(data);
-      Provide.value<CategoryGoodsListProvide>(context)
-          .getCategoryGoodsList(goodsList.data);
-      // setState(() {
-      // list = goodsList.data;
-      // });
-      // print('xxxxxxxxxx==============>>>>>>>>>>>>>>>>>>>${goodsList.data[0].goodsName}');
-      // print("hahhahahhaahaahahah${val}");
+      if (goodsList.data == null) {
+        Provide.value<CategoryGoodsListProvide>(context)
+            .getCategoryGoodsList([]);
+      } else {
+        Provide.value<CategoryGoodsListProvide>(context)
+            .getCategoryGoodsList(goodsList.data);
+      }
     });
   }
 }
@@ -254,7 +254,8 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   Widget build(BuildContext context) {
     return Provide<CategoryGoodsListProvide>(
       builder: (context, child, data) {
-        return Expanded(
+        if (data.categoryGoodsList.length> 0) {
+          return Expanded(
           child: Container(
             width: ScreenUtil().setWidth(570),
             child: ListView.builder(
@@ -265,6 +266,10 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
             ),
           ),
         );
+        } else {
+          return Text('暂时没有该类商品');
+        }
+        
       },
     );
   }
