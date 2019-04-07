@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 import '../provide/child_category.dart';
 import '../provide/category_goods_list.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class CategoryPage extends StatefulWidget {
   @override
@@ -167,6 +168,7 @@ class _rightCategoryNavi extends StatefulWidget {
 
 class __rightCategoryNaviState extends State<_rightCategoryNavi> {
 // List list = ['全部','名酒','宝丰','北京二锅头','茅台','五粮液','衡水老白干'];
+
   @override
   Widget build(BuildContext context) {
     return Provide<ChildCategory>(
@@ -199,7 +201,8 @@ class __rightCategoryNaviState extends State<_rightCategoryNavi> {
 
     return InkWell(
       onTap: () {
-        Provide.value<ChildCategory>(context).changeChildIndex(index,item.mallSubId);
+        Provide.value<ChildCategory>(context)
+            .changeChildIndex(index, item.mallSubId);
         _getCategoryGoodsList(item.mallSubId);
       },
       child: Container(
@@ -244,6 +247,8 @@ class CategoryGoodsList extends StatefulWidget {
 
 class _CategoryGoodsListState extends State<CategoryGoodsList> {
   // var list = [];
+  GlobalKey<RefreshFooterState> _footerkey =
+      new GlobalKey<RefreshFooterState>();
   @override
   void initState() {
     // _getCategoryGoodsList();
@@ -254,25 +259,68 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   Widget build(BuildContext context) {
     return Provide<CategoryGoodsListProvide>(
       builder: (context, child, data) {
-        if (data.categoryGoodsList.length> 0) {
+        if (data.categoryGoodsList.length > 0) {
           return Expanded(
-          child: Container(
-            width: ScreenUtil().setWidth(570),
-            child: ListView.builder(
-              itemCount: data.categoryGoodsList.length,
-              itemBuilder: (context, index) {
-                return _goodsList(data.categoryGoodsList, index);
-              },
+            child: Container(
+              width: ScreenUtil().setWidth(570),
+              child: EasyRefresh(
+                refreshFooter: ClassicsFooter(
+                  key: _footerkey,
+                  bgColor: Colors.white,
+                  textColor: Colors.pink,
+                  moreInfoColor: Colors.pink,
+                  showMore: true,
+                  noMoreText: '',
+                  moreInfo: '更多信息',
+                  loadReadyText: '松手刷新',
+                  loadingText: '上拉',
+                  loadedText: '1111',
+                  loadText: '使劲上拉',
+                  loadHeight: 60,
+                ),
+                child: ListView.builder(
+                  itemCount: data.categoryGoodsList.length,
+                  itemBuilder: (context, index) {
+                    return _goodsList(data.categoryGoodsList, index);
+                  },
+                ),
+                loadMore: () async {
+                  print('加载更多数据。。。。。');
+                  
+                  _getMoreList();
+
+                },
+              ),
             ),
-          ),
-        );
+          );
         } else {
           return Text('暂时没有该类商品');
         }
-        
       },
     );
   }
+
+  //获取更多商品列表
+  void _getMoreList() {
+    Provide.value<ChildCategory>(context).increasePage();
+    var data = {
+      'categoryId': Provide.value<ChildCategory>(context).categoryId,
+      'categorySubId': Provide.value<ChildCategory>(context).subId,
+      'page': Provide.value<ChildCategory>(context).page
+    };
+
+    request("getMallGoods", formData: data).then((val) {
+      var data = json.decode(val.toString());
+      CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(data);
+      if (goodsList.data == null) {
+        Provide.value<ChildCategory>(context).changeNoMoreText('没有更多了！！！');
+      } else {
+        Provide.value<CategoryGoodsListProvide>(context)
+            .getMoreGoodsList(goodsList.data);
+      }
+    });
+  }
+
 
 //调试参数接口移除，放到左侧leftNavi的onTap方法中
 
