@@ -4,6 +4,7 @@ import '../provide/details_info.dart';
 import './detail_pages/detail_top_area.dart';
 import './detail_pages/detail_explain.dart';
 import './detail_pages/detail_tabBar.dart';
+import './detail_pages/detail_web_detail.dart';
 
 
 class DetailPage extends StatelessWidget {
@@ -34,7 +35,8 @@ class DetailPage extends StatelessWidget {
                   children: <Widget>[
                     DetailTopArea(),
                     DetailExplainArea(),
-                    DetailTabBar()
+                    DetailTabBar(),
+                    DetailWebDetail()
                   ],
                 ),
               );
