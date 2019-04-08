@@ -26,9 +26,9 @@ class myNumber extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 200),
       child: Provide<Counter>(
-        builder: (context,child,counter){
+        builder: (context,child,val){
           return Text(
-            '${counter.value}',
+            '${val.value}',
             style: Theme.of(context).textTheme.display1,
           );
         },

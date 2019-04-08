@@ -9,9 +9,9 @@ class MemberPage extends StatelessWidget {
       appBar: new AppBar(title: Text('会员中心'),),
       body: Center(
         child: Provide<Counter>(
-          builder: (context,child,counter){
+          builder: (context,child,val){
             return Text(
-            '${counter.value}',
+            '${val.value}',
             style: Theme.of(context).textTheme.display1,
           );
           },
