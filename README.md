@@ -15,7 +15,11 @@ A new Flutter project.
 
 ### 涉及的第三方库
 
-[路由管理-fluro](<https://github.com/theyakka/fluro>)
+[路由管理-fluro](<https://github.com/theyakka/fluro>) 
+
+使用方法：商品静态化—>书写Handler—>总体route的设置，建立静态全局router 与handle的联系—>main函数中总体的注入，即将application中的声明的静态的router赋值给初始化的router，并在MaterialApp中设置其generator—>使用，直接使用application.router.navigateTo(参数)
+
+
 
 
 

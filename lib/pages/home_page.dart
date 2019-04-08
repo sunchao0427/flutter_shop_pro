@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import '../routers/application.dart';
 
 // class HomePage extends StatelessWidget {
 //   @override
@@ -313,6 +314,7 @@ Widget _warpList(){//数据流式布局
     List<Widget> listWidget =hotGoodsList.map((val){
       return InkWell(
         onTap: (){
+          Application.router.navigateTo(context, "detail?id=${val['goodsId']}");
           print('点击了火爆专区');
         },
         child: Container(
