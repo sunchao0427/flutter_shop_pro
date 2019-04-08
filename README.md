@@ -2,7 +2,7 @@
 
 A Flutter project about shop.
 > ### 例子图片：
-
+---
 [<img src="https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/android_main.png" width="270" height="480" alt="Brand-first shopping design" align="left">](https://github.com/flutter/flutter/tree/master/examples/flutter_gallery/lib/demo/animation)
 <img src="https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/android_category1.png" width="270" height="480" alt="Fitness app design">
 
@@ -11,11 +11,11 @@ A Flutter project about shop.
 [<img src="https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/iPhone_main.png" width="270" height="584" alt="Brand-first shopping design" align="left">](https://github.com/flutter/flutter/tree/master/examples/flutter_gallery/lib/demo/animation)
 <img src="https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/iPhone_category1.png" width="270" height="584" alt="Fitness app design">
 
+
+---
 > ### 涉及的第三方库
-
 ***
-
-####1、[Dart Http请求库dio](<https://github.com/flutterchina/dio>)
+#### 1、[Dart Http请求库dio](<https://github.com/flutterchina/dio>)
 
 ```dart
 Response response = await Dio().get("http://www.baidu.com");
@@ -56,7 +56,7 @@ return Container(
 
 
 
-####4、[Flutter服务访问（拨打电话、发送邮件、信息跳转）插件请求器url_launcher](<https://pub.dartlang.org/packages/url_launcher>)
+#### 4、[Flutter服务访问（拨打电话、发送邮件、信息跳转）插件请求器url_launcher](<https://pub.dartlang.org/packages/url_launcher>)
 
 ```dart
 void _launchUrl() async {
@@ -83,7 +83,7 @@ return EasyRefresh(
 
 
 
-####6、[状态管理Google亲儿子 provide](<https://github.com/google/flutter-provide>)
+#### 6、[状态管理Google亲儿子 provide](<https://github.com/google/flutter-provide>)
 
 ```dart
 //1、建立专门的provide类 Counter 并混入ChangeNotifier 类内部编写状态变化逻辑
@@ -145,9 +145,9 @@ return Html(
   data:goodsDetail
 );
 ```
-
+***
 > ### 使用Flutter 
-
+---
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
