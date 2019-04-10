@@ -11,7 +11,6 @@ A Flutter project about shop.
 [<img src="https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/iPhone_main.png" width="270" height="584" alt="Brand-first shopping design" align="left">](https://github.com/flutter/flutter/tree/master/examples/flutter_gallery/lib/demo/animation)
 <img src="https://github.com/sunchao0427/flutter_shop_pro/blob/master/res/iPhone_category1.png" width="270" height="584" alt="Fitness app design">
 
-
 ---
 > ### 涉及的第三方库
 ***
@@ -144,8 +143,38 @@ if (goodsList.data == null) {
 return Html(
   data:goodsDetail
 );
+
 ```
+### 10、[数据持久化插件 shared_preferences](<https://pub.dartlang.org/packages/shared_preferences>)   此外还有[sqflite](<https://pub.dartlang.org/packages/sqflite>) 、[文件存储插件path_provider](<https://github.com/flutter/plugins/tree/master/packages/path_provider>)
+
+```Dart
+var prefs = await SharedPreferences.getInstance();//获取实例对象
+
+//增 setxx   、删 (remove、clear)、改 、查get
+
+get/setInt(key) //- 查询或设置整型键。
+
+get/setBool(key) //- 查询或设置布尔键。
+
+get/setDouble(key) //- 查询或设置浮点键。
+
+get/setString(key) //- 查询或设置字符串键。
+
+get/setStringList(key) //- 查询或设置字符串列表键。
+
+getKeys() //- 获取所有键值名。
+
+remove(key) //- 删除某个键内容。
+
+clear() //- 清除全部内容。
+```
+
+
+
+
+
 ***
+
 > ### 使用Flutter 
 ---
 This project is a starting point for a Flutter application.

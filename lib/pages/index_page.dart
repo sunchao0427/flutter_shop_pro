@@ -31,9 +31,9 @@ final List<BottomNavigationBarItem> bottomTabs = [
 ];
  final List<Widget> tabBodies = [
    HomePage(),
-    CategoryPage(),
-    CartPage(),
-    MemberPage()
+   CategoryPage(),
+   CartPage(),
+   MemberPage()
  ];
 
  int currentIndex = 0 ;
